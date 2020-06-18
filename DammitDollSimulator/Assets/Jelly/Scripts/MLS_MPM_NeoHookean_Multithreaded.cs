@@ -20,8 +20,6 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
         public float3x3 C; // affine momentum matrix
         public float mass;
         public float volume_0; // initial volume
-
-        // DJ - color
         public int colorNum;
     }
 
@@ -4343,7 +4341,6 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
         6f, 52f, 18f,
         6f, 54f, 18f
     };
-
     float[] tailV = new float[]
     {
         -2f, 36f, -26f,
@@ -4434,8 +4431,7 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
         0f, 34f, -16f
     };
 
-    //const int grid_res = 64;
-    const int grid_res = 32;
+    const int grid_res = 64; //32
     const int num_cells = grid_res * grid_res * grid_res;
 
     // batch size for the job system. just determined experimentally
@@ -4460,14 +4456,22 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
 
     int num_particles = 0;
     List<float3> temp_positions;
-    List<int> temp_colorNums; // DJ - color
+    List<int> temp_colorNums;
 
     SimRenderer sim_renderer;
 
     // interaction
-    const float mouse_radius = 10;
+    const float mouse_radius = 5; // 10
     bool mouse_down = false;
     float2 mouse_pos;
+
+    // Unity gameobject
+    public GameObject jellyObject;
+    float3 jellyObjectPos;
+    float3 prevJellyObjectPos;
+    float3 jellyObjectPosDiff;
+    bool jellyObjectPosChanged;
+    //Vector3 colliderPosition;
 
     void spawn_box(int x, int y, int z, int box_x = 8, int box_y = 8, int box_z = 8)
     {
@@ -4490,6 +4494,12 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
     void vertices_positioning(float[] vertice)
     {
         const float spacing = 0.5f;
+
+        const float initX = 0.0f;
+        const float initY = 0.0f;
+        const float initZ = 0.0f;
+
+        const float scaling = 0.1f; // 0.2f
         const int yellow = 0;
         const int brown = 1;
         const int green = 2;
@@ -4497,17 +4507,17 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
         //const float spacing = 1f;
         for (int i = 0; i < vertice.Length; i += 3)
         {
-            var pos = math.float3((vertice[i]+30f)*0.2f, (vertice[i + 1]+30f)*0.2f, (vertice[i + 2]+30f)*0.2f);
+            var pos = math.float3((vertice[i]+30f)*scaling + initX, (vertice[i + 1]+30f)*scaling + initY, (vertice[i + 2]+30f)*scaling + initZ);
             temp_positions.Add(pos);
 
-            print("x:" + pos.x + "y:" + pos.y + "z:" + pos.z);
+            //print("x:" + pos.x + "y:" + pos.y + "z:" + pos.z);
 
-            if (pos.y >= 16f)
+            if (pos.y >= (80f * scaling))
             {
                 // yellow shirts
                 temp_colorNums.Add(yellow);
             }
-            else if (pos.y >= 14.5f)
+            else if (pos.y >= (72.5f * scaling))
             {
                 // brown body
                 temp_colorNums.Add(brown);
@@ -4525,6 +4535,14 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
 
     void Start()
     {
+
+        jellyObjectPos = math.float3(jellyObject.transform.position.x, jellyObject.transform.position.y, jellyObject.transform.position.z);
+        prevJellyObjectPos = math.float3(jellyObject.transform.position.x, jellyObject.transform.position.y, jellyObject.transform.position.z);
+        jellyObjectPosDiff = math.float3(0f, 0f, 0f);
+        jellyObjectPosChanged = false;
+
+        //print(box.transform.position.x);
+
         // populate our array of particles
         temp_positions = new List<float3>();
         temp_colorNums = new List<int>();
@@ -4534,8 +4552,8 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
         vertices_positioning(bodyV);
         //vertices_positioning(tailV);
 
-        print("num_particles:" + num_particles);
-        print("num_cells:" + num_cells);
+        //print("num_particles:" + num_particles);
+        //print("num_cells:" + num_cells);
 
         ps = new NativeArray<Particle>(num_particles, Allocator.Persistent);
         Fs = new NativeArray<float3x3>(num_particles, Allocator.Persistent);
@@ -4548,7 +4566,7 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
             p.v = 0;
             p.C = 0;
             p.mass = 1.0f;
-            p.colorNum = temp_colorNums[i]; // DJ - color
+            p.colorNum = temp_colorNums[i]; 
             ps[i] = p;
 
             // deformation gradient initialised to the identity
@@ -4642,11 +4660,22 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
             mouse_down = true;
             var mp = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             mouse_pos = math.float2(mp.x * grid_res, mp.y * grid_res);
+            //mouse_pos = math.float2((mp.x+2.91f), (mp.y+2.89f));
+
         }
     }
 
     void Simulate()
     {
+        jellyObjectPos = math.float3(jellyObject.transform.position.x, jellyObject.transform.position.y, jellyObject.transform.position.z);
+        jellyObjectPosDiff = jellyObjectPos - prevJellyObjectPos;
+                       
+        if ((jellyObjectPosDiff.x > 0) || (jellyObjectPosDiff.y > 0) || (jellyObjectPosDiff.z > 0))
+        {
+            //print(jellyObjectPosDiff);
+            jellyObjectPosChanged = true;
+
+        }
         Profiler.BeginSample("ClearGrid");
         new Job_ClearGrid()
         {
@@ -4661,7 +4690,7 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
             ps = ps,
             Fs = Fs,
             grid = grid,
-            num_particles = num_particles
+            num_particles = num_particles,
         }.Schedule().Complete();
         Profiler.EndSample();
 
@@ -4679,9 +4708,13 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
             Fs = Fs,
             mouse_down = mouse_down,
             mouse_pos = mouse_pos,
-            grid = grid
+            grid = grid,
+            jellyObjectPosDiff = jellyObjectPosDiff,
+            jellyObjectPosChanged = jellyObjectPosChanged
         }.Schedule(num_particles, division).Complete();
         Profiler.EndSample();
+
+        prevJellyObjectPos = jellyObjectPos;
     }
 
     #region Jobs
@@ -4706,6 +4739,8 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
     unsafe struct Job_P2G : IJob
     {
         public NativeArray<Cell> grid;
+        //public float3 jellyObjectPos;
+
         [ReadOnly] public NativeArray<Particle> ps;
         [ReadOnly] public NativeArray<float3x3> Fs;
         [ReadOnly] public int num_particles;
@@ -4816,14 +4851,10 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
             {
                 // convert momentum to velocity, apply gravity
                 cell.v /= cell.mass;
-                cell.v += dt * math.float3(0, gravity, 0);
+                //cell.v += dt * math.float3(0, gravity, 0);
+                cell.v += dt * math.float3(0, 0, 0);
 
                 // 'slip' boundary conditions
-                //int x = i / grid_res;
-                //int y = i % grid_res;
-                //if (x < 2 || x > grid_res - 3) { cell.v.x = 0; }
-                //if (y < 2 || y > grid_res - 3) { cell.v.y = 0; }
-
                 int x = i / (grid_res * grid_res);
                 int y = (i - (x * grid_res * grid_res)) / grid_res;
                 int z = i - (x * grid_res * grid_res) - (y * grid_res);
@@ -4831,6 +4862,8 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
                 if (x < 2 || x > grid_res - 3) { cell.v.x = 0; }
                 if (y < 2 || y > grid_res - 3) { cell.v.y = 0; }
                 if (z < 2 || z > grid_res - 3) { cell.v.z = 0; }
+
+
 
                 grid[i] = cell;
             }
@@ -4842,6 +4875,8 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
     {
         public NativeArray<Particle> ps;
         public NativeArray<float3x3> Fs;
+        public float3 jellyObjectPosDiff;
+        public bool jellyObjectPosChanged;
         [ReadOnly] public NativeArray<Cell> grid;
 
         [ReadOnly] public bool mouse_down;
@@ -4894,7 +4929,15 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
             p.C = B * 4;
 
             // advect particles
+            //p.x = jellyObjectPos; // DJ - 젤리 실체 위치를 따라감
+            //if (jellyObjectPosChanged)
+            //{
+            //    p.x += (jellyObjectPosDiff * 10f);
+            //}
             p.x += p.v * dt;
+            p.x += (jellyObjectPosDiff * 10f);
+
+
 
             // safety clamp to ensure particles don't exit simulation domain
             p.x = math.clamp(p.x, 1, grid_res - 2);
@@ -4907,7 +4950,7 @@ public class MLS_MPM_NeoHookean_Multithreaded : MonoBehaviour
                 if (math.dot(dist, dist) < mouse_radius * mouse_radius) {
                     float norm_factor = (math.length(dist) / mouse_radius);
                     norm_factor = math.pow(math.sqrt(norm_factor), 8);
-                    var force = math.normalize(dist) * norm_factor * 0.5f;
+                    var force = math.normalize(dist) * norm_factor * 0.1f; // 0.5f
                     //p.v += force;
                     p.v += math.float3(force, 0.0f);
                 }
