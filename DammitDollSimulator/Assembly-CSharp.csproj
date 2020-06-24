@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -63,75 +63,87 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Jelly\Renderer\SimRenderer.cs" />
-    <Compile Include="Assets\Jelly\Scripts\MLS_MPM_NeoHookean_Multithreaded.cs" />
-    <None Include="Assets\Jelly\Shaders\Test.shader" />
-    <None Include="Assets\Jelly\Shaders\InstancedParticle.shader" />
-    <Reference Include="Unity.Burst">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    <Compile Include="Assets\Deformers\DeformersScripts\ExtraScripts\ColorizeGrid.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\ExtraScripts\EffectorVal.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\BETABlendShapeDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\CurveShapeDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\FlareDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\ImageDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\RippleDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\SimpleBlendShape.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\SineDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Mesh Deformers\TwistDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Objects Deformer\ObjectRotateEffectorDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Objects Deformer\ObjectScaleEffectorDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Objects Deformer\ObjectsImageDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Objects Deformer\ObjectsRipple.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Objects Deformer\ObjectsSine.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Objects Deformer\ObjectTransformEffectorDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Skinned Mesh Deformers\SkinnedMeshAnimCurveDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Skinned Mesh Deformers\SkinnedMeshFlareDeformer.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Skinned Mesh Deformers\skinnedMeshRipple.cs" />
+    <Compile Include="Assets\Deformers\DeformersScripts\Skinned Mesh Deformers\SkinnedMeshSine.cs" />
+    <Compile Include="Assets\Environment\_SNAPS_PrototypingAssets\About\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\Beads.cs" />
+    <Compile Include="Assets\Scripts\BeadsSecond.cs" />
+    <Compile Include="Assets\Scripts\Blade\CameraLineSplitter.cs" />
+    <Compile Include="Assets\Scripts\Blade\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\Blade\DestroyLimitY.cs" />
+    <Compile Include="Assets\Scripts\Blade\IMeshSplitter.cs" />
+    <Compile Include="Assets\Scripts\Blade\ISplitable.cs" />
+    <Compile Include="Assets\Scripts\Blade\MeshContainer.cs" />
+    <Compile Include="Assets\Scripts\Blade\MeshSplitterConcave.cs" />
+    <Compile Include="Assets\Scripts\Blade\MeshSplitterConvex.cs" />
+    <Compile Include="Assets\Scripts\Blade\MouseMotor.cs" />
+    <Compile Include="Assets\Scripts\Blade\Plane.cs" />
+    <Compile Include="Assets\Scripts\Blade\RigidMotor.cs" />
+    <Compile Include="Assets\Scripts\Blade\Splitable.cs" />
+    <Compile Include="Assets\Scripts\Blade\Splitter.cs" />
+    <Compile Include="Assets\Scripts\Blade\SplitterMath.cs" />
+    <Compile Include="Assets\Scripts\Blade\SplitterSingleCut.cs" />
+    <Compile Include="Assets\Scripts\DragRigidbody.cs" />
+    <Compile Include="Assets\Scripts\Liquid.cs" />
+    <Compile Include="Assets\Scripts\MouseCursorScript.cs" />
+    <None Include="Assets\Shaders\DebugNormal.shader" />
+    <None Include="Assets\Shaders\ColorOverlay.shader" />
+    <Reference Include="Unity.ProGrids">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Entities.Properties">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Entities.Properties.dll</HintPath>
+    <Reference Include="Unity.ProBuilder">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Properties.Codegen">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Properties.Codegen.dll</HintPath>
+    <Reference Include="Unity.ProBuilder.Editor">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Jobs">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Jobs.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities.StaticTypeRegistry">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Entities.StaticTypeRegistry.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Properties">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+    <Reference Include="Unity.ProGrids.Editor">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Entities.Hybrid">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Transforms">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Transforms.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Transforms.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Transforms.Hybrid">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -335,13 +347,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.23f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/PackageCache/com.unity.analytics@3.2.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/PackageCache/com.unity.burst@1.1.2/Unity.Burst.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>D:/UnityWorkspace/CG_Local/DammitDollSimulator/Library/PackageCache/com.unity.collections@0.0.9-preview.12/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>D:/UnityWorkspace/CG_Project/DammitDollSimulator/Library/PackageCache/com.unity.analytics@3.2.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.23f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

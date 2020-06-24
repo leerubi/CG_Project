@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Merged.unity
+- path: Assets/Scenes/DammitDollSimulator.unity
   isLoaded: 1
   isActive: 1
