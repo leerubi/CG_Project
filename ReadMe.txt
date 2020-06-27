@@ -6,7 +6,7 @@ Unity 2018.4.23f1
 2. FinalPresentation.pptx: 프로젝트 최종 발표 PPT
 3. DemoVideo: 최종 발표에 사용된 데모 영상
 4. Excutables\DollSimulator.exe: 시뮬레이션 실행파일
-5.ProgramFiles: Unity 프로젝트 및 소스코드 폴더
+5. ProgramFiles: Unity 프로젝트 및 소스코드 폴더
 
 <실행파일에서 키보드 및 마우스 인터랙션 방법>
 1. 플레이어(카메라) 이동: WASD 키 입력
