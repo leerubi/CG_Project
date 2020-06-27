@@ -4,7 +4,7 @@ Unity 2018.4.23f1
 <파일 및 디렉토리 설명>
 1. FinalReport.pdf: 프로젝트 최종 보고서
 2. FinalPresentation.pptx: 프로젝트 최종 발표 PPT
-3. DemoVideo: 최종 발표에 사용된 데모 영상
+3. DemoVideo.mp4: 최종 발표에 사용된 데모 영상
 4. Excutables\DollSimulator.exe: 시뮬레이션 실행파일
 5. ProgramFiles: Unity 프로젝트 및 소스코드 폴더
 
